@@ -20,7 +20,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="{{ url('/') }}"><i class="glyphicon glyphicon-home"></i>Главная</a></li>
+                    <li><a href="{{ url('/') }}"><i class="glyphicon glyphicon-home"></i>Главная</a></li>
                     <li><a href="{{ url('comments') }}"><i class="glyphicon glyphicon-pencil"></i>Комментарии</a></li>
                     <li><a href="{{ url('about') }}"><i class="glyphicon glyphicon-info-sign"></i>Информация</a></li>
                 </ul>
