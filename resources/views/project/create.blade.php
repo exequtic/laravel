@@ -2,12 +2,12 @@
 @section('content')
     <h2 align="center">Написать комментарий</h2>
     <h6 align="center">Вы можете оставить свои предложения, пожелания, жалобы.</h6><br>
-    <form class="form-horizontal" action="/comments" method="POST">
+    <form class="form-horizontal" action="{{ route('comments.store') }}" method="POST">
         {{ csrf_field() }}
         <fieldset>
             <div class="input-group">
                 <span class="input-group-addon input-sm"><i class="glyphicon glyphicon-user"></i></span>
-                <input class="form-control input-sm" type="text" name="name" placeholder="Ваше имя">
+                <input class="form-control input-sm" type="text" name="name" placeholder="Ваше имя" value="{{ Request::get('name') }}">
             </div><br>
             <div class="input-group">
                 <span class="input-group-addon input-sm"><i class="glyphicon glyphicon-envelope"></i></span>

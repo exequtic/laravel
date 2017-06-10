@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', 'Controller@index');
-Route::get('/about', 'Controller@about');
+Route::get('/', 'Controller@index')->name('index');
+Route::get('/about', 'Controller@about')->name('about');
 Route::resource('/comments', 'ProjectController');

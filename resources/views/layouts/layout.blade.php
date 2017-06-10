@@ -18,11 +18,12 @@
             <div class="navbar-header">
                 <span class="navbar-brand">Project</span>
             </div>
+
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/') }}"><i class="glyphicon glyphicon-home"></i>Главная</a></li>
-                    <li><a href="{{ url('comments') }}"><i class="glyphicon glyphicon-pencil"></i>Комментарии</a></li>
-                    <li><a href="{{ url('about') }}"><i class="glyphicon glyphicon-info-sign"></i>Информация</a></li>
+                    <li @if (Route::getCurrentRoute()->getName() === 'index') {!! 'class="active"' !!} @endif><a href="{{ url('/') }}"><i class="glyphicon glyphicon-home"></i>Главная</a></li>
+                    <li @if (strpos(Route::getCurrentRoute()->getName(), 'comments.') === 0) {!! 'class="active"' !!} @endif><a href="{{ url('comments') }}"><i class="glyphicon glyphicon-pencil"></i>Комментарии</a></li>
+                    <li @if (Route::getCurrentRoute()->getName() === 'about') {!! 'class="active"' !!} @endif><a href="{{ url('about') }}"><i class="glyphicon glyphicon-info-sign"></i>Информация</a></li>
                 </ul>
             </div>
         </div>
