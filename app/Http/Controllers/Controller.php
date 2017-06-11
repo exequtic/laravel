@@ -13,11 +13,11 @@ class Controller extends BaseController
 
     public function index()
     {
-        return view('project.start', $array = ['title' => 'Project']);
+        return view('project.start', ['title' => 'Project']);
     }
 
     public function about()
     {
-        return view('project.about', $array = ['title' => 'Обо мне']);
+        return view('project.about', ['title' => 'Обо мне']);
     }
 }

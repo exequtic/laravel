@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\comment;
+use App\Comment;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProjectController extends Controller
 {
@@ -14,8 +15,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $comments = comment::orderBy('created_at', 'desc')->get();
-        return view('project.comments', compact('comments'), $array = ['title' => 'Гостевая книга']);
+        $comments = Comment::orderBy('created_at', 'desc')->paginate(1);
+        return view('project.comments', compact('comments'), ['title' => 'Гостевая книга']);
     }
 
     /**
@@ -25,7 +26,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('project.create', $array = ['title' => 'Комментирование']);
+        return view('project.create', ['title' => 'Комментирование']);
     }
 
     /**
@@ -36,12 +37,13 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $comment = new comment;
-        $this->validate($request, ['name' => 'required|unique:comments|max:20|min:2', 'email' => 'required|email|unique:comments', 'msg' => 'required|min:10']);
+        $comment = new Comment();
+        $this->validate($request, ['name' => 'required|unique:comments|max:20|min:2', 'email' => 'required|unique:comments', 'msg' => 'required|min:5']);
         $comment->name = $request->name;
         $comment->email = $request->email;
         $comment->msg = $request->msg;
         $comment->save();
+
         return redirect('comments');
     }
 
@@ -59,12 +61,18 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return \Illuminate\View\View
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::find($id);
+        if (!$comment) {
+            return abort(404);
+        }
+
+        return view('project.edit', ['title' => 'Комментирование'])->with('comment', Comment::find($id));
     }
 
     /**
@@ -74,9 +82,14 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $comment = Comment::find($id);
+
+        $comment->fill($request->all());
+        $comment->save();
+
+        return redirect('comments');
     }
 
     /**
@@ -87,6 +100,8 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Comment::destroy($id);
+
+        return  redirect('comments');
     }
 }

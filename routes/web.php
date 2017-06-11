@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', 'Controller@index')->name('index');
 Route::get('/about', 'Controller@about')->name('about');
 Route::resource('/comments', 'ProjectController');
+Route::get('/comments/{id}/delete', 'ProjectController@destroy')->name('comments.destroy');
